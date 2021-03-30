@@ -21,8 +21,8 @@ class LogoController extends Controller
         $editData=Logo::find($id);
         return view('backend.logo.edit',compact('editData'));
     }
-    public function delete($id){
-        $data=Logo::find($id);
+    public function delete(Request $request){
+        $data=Logo::find($request->id);
         if (file_exists('upload/logo/' . $data->logo) AND ! empty ($data->logo)) {
             unlink('upload/logo/'.$data->logo);
         }

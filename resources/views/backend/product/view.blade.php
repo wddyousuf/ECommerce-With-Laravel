@@ -47,6 +47,8 @@
                         <tr>
                           <th>SL No</th>
                           <th>Category</th>
+                          <th>SubCategory</th>
+                          <th>SubSubCategory</th>
                           <th>Brand</th>
                           <th>Product </th>
                           <th>Price</th>
@@ -62,6 +64,8 @@
                         <tr class="{{ $product->id }}">
                             <td>{{ $key+1 }}</td>
                             <td>{{ $product['category']['name']}}</td>
+                            <td>{{ $product['subCategory']['name']}}</td>
+                            <td>{{ $product['subSubCategory']['name']}}</td>
                             <td>{{ $product['brand']['name']}}</td>
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->price }}</td>
@@ -71,6 +75,7 @@
                                 alt="{{ $product->name }}" style="height: 100px; width:100px;"></td>
                             <td>
                                 <a title="Edit" href="{{ route('product.edit',$product->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+                                <a title="Datails" href="{{ route('product.datails',$product->id) }}" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a>
                                 <a title="Delete" id="delete" href="{{ route('product.delete') }}" data-token="{{ csrf_token() }}" data-id="{{ $product->id }}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>

@@ -8,7 +8,9 @@ use App\Model\Contact;
 use Illuminate\Http\Request;
 use Auth;
 use App\Model\Logo;
+use App\Model\Product;
 use App\Model\Slider;
+use App\User;
 //use Illuminate\Support\Facades\Mail;
 use Mail;
 
@@ -18,14 +20,42 @@ class FrontendController extends Controller
         $data['logo']=Logo::first();
         $data['sliders']=Slider::all();
         $data['contact']=Contact::first();
+        $data['category']=Product::select('cat_id')->groupBy('cat_id')->get();
+        $data['subcategory']=Product::select('subcat_id')->groupBy('subcat_id')->get();
+        $data['subsubcategory']=Product::select('subsubcat_id')->groupBy('subsubcat_id')->get();
+        $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
+        $data['product']=Product::orderBy('id','desc')->get();
+        $data['products']=Product::orderBy('id','asc')->get();
+        $data['user']=User::all();
         return view('frontend.layouts.index',$data);
     }
     public function about(){
-        $data=About::first();
-        return view('frontend.layouts.aboutus',compact('data'));
+        $data['about']=About::first();
+        $data['logo']=Logo::first();
+        $data['sliders']=Slider::all();
+        $data['contact']=Contact::first();
+        $data['category']=Product::select('cat_id')->groupBy('cat_id')->get();
+        $data['subcategory']=Product::select('subcat_id')->groupBy('subcat_id')->get();
+        $data['subsubcategory']=Product::select('subsubcat_id')->groupBy('subsubcat_id')->get();
+        $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
+        $data['product']=Product::orderBy('id','desc')->get();
+        $data['products']=Product::orderBy('id','asc')->get();
+        $data['user']=User::all();
+        return view('frontend.layouts.aboutus',$data);
     }
     public function contact(){
-        return view('frontend.layouts.contactus');
+        $data['about']=About::first();
+        $data['logo']=Logo::first();
+        $data['sliders']=Slider::all();
+        $data['contact']=Contact::first();
+        $data['category']=Product::select('cat_id')->groupBy('cat_id')->get();
+        $data['subcategory']=Product::select('subcat_id')->groupBy('subcat_id')->get();
+        $data['subsubcategory']=Product::select('subsubcat_id')->groupBy('subsubcat_id')->get();
+        $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
+        $data['product']=Product::orderBy('id','desc')->get();
+        $data['products']=Product::orderBy('id','asc')->get();
+        $data['user']=User::all();
+        return view('frontend.layouts.contactus',$data);
     }
     public function store(Request $request){
         $data=new Communicate();
@@ -55,5 +85,31 @@ class FrontendController extends Controller
     }
     public function cart(){
         return view('frontend.pages.cart');
+    }
+    public function detail($slug){
+        $data['logo']=Logo::first();
+        $data['sliders']=Slider::all();
+        $data['contact']=Contact::first();
+        $data['category']=Product::select('cat_id')->groupBy('cat_id')->get();
+        $data['subcategory']=Product::select('subcat_id')->groupBy('subcat_id')->get();
+        $data['subsubcategory']=Product::select('subsubcat_id')->groupBy('subsubcat_id')->get();
+        $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
+        $data['user']=User::all();
+        $data['product']=Product::where('slug',$slug)->first();
+        $data['products']=Product::orderBy('id','asc')->get();
+        return view('frontend.pages.detail',$data);
+    }
+    public function catwise($id){
+        $data['logo']=Logo::first();
+        $data['sliders']=Slider::all();
+        $data['contact']=Contact::first();
+        $data['category']=Product::select('cat_id')->groupBy('cat_id')->get();
+        $data['subcategory']=Product::select('subcat_id')->groupBy('subcat_id')->get();
+        $data['subsubcategory']=Product::select('subsubcat_id')->groupBy('subsubcat_id')->get();
+        $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
+        $data['user']=User::all();
+        $data['products']=Product::orderBy('id','asc')->get();
+        $data['catwise']=Product::where('subsubcat_id',$id)->get();
+        return view('frontend.pages.catwise',$data);
     }
 }

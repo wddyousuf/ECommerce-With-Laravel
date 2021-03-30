@@ -22,8 +22,8 @@ class ContactController extends Controller
         $editData=Contact::find($id);
         return view('backend.contact.edit',compact('editData'));
     }
-    public function delete($id){
-        $data=Contact::find($id);
+    public function delete(Request $request){
+        $data=Contact::find($request->id);
         $data->delete();
         return redirect()->route('contact.view')->with('success','Contact Deleted Successfully');
     }

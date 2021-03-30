@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">All Messages</h1>
+            <h1 class="m-0">Manage SubCategory</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-              <li class="breadcrumb-item active">All Messages</li>
+              <li class="breadcrumb-item active">Manage SubCategory</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -33,39 +33,43 @@
                 <div class="card-header">
                   <h3>
                     <i class="mr-1 text-info"></i>
-                    All Messages
+                    SubCategory
+                    <a href="{{ route('subCategory.add') }}" class="btn btn-info float-right "><i class="fa fa-plus-circle ml-1 mr-1"></i>Add SubCategory</a>
+
                     </h3>
 
                 </div><!-- /.card-header -->
                 <div class="card-body">
 
 
-                    <table id="example1" class="table table-bordered table-striped table-responsive">
+                    <table id="example1" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                           <th>SL No</th>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Mobile</th>
-                          <th>Address</th>
-                          <th>Message</th>
+                          <th>Category</th>
+                          <th>SubCategory Name</th>
                           <th>Action</th>
                         </tr>
                         </thead>
-                        @foreach ($data as $key=>$contact)
-                        <tbody class="$contact->id">
-                            <td>{{ $key+1 }}</td>
-                            <td>{{ $contact->name }}</td>
-                            <td>{{ $contact->email }}</td>
-                            <td>{{ $contact->number }}</td>
-                            <td>{{ $contact->address }}</td>
-                            <td>{{ $contact->message }}</td>
-                            <td>
-                                <a title="Delete" id="delete" href="{{ route('communicate.delete') }}" class="btn btn-danger btn-xs" data-token="{{ csrf_token() }}" data-id="{{ $contact->id }}"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tbody>
-                        @endforeach
+                        <tbody>
 
+                        @foreach ($all_data as $key=>$subCategory)
+                        @php
+                            $counts=App\Model\Product::where('subcat_id',$subCategory->id)->count();
+                        @endphp
+                        <tr class="{{ $subCategory->id }}">
+                            <td>{{ $key+1 }}</td>
+                            <td>{{ $subCategory['category']['name'] }}</td>
+                            <td>{{ $subCategory->name }}</td>
+                            <td>
+                                <a title="Edit" href="{{ route('subCategory.edit',$subCategory->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+                                @if ($counts<1)
+                                <a title="Delete" id="delete" href="{{ route('subCategory.delete') }}" data-token="{{ csrf_token() }}" data-id="{{ $subCategory->id }}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
                     </table>
                 </div>
             </div>

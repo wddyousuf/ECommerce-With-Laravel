@@ -71,7 +71,7 @@
                             <td>{{ $contact->gplus_link }}</td>
                             <td>
                                 <a title="Edit" href="{{ route('contact.edit',$contact->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
-                                <a title="Delete" id="delete" href="{{ route('contact.delete') }}" class="btn btn-danger btn-xs" data-token="{{ csrf_token() }}" data-id="{{ $contact->id }}><i class="fa fa-trash"></i></a>
+                                <a title="Delete" id="delete" href="{{ route('contact.delete') }}" class="btn btn-danger btn-xs" data-token="{{ csrf_token() }}" data-id="{{ $contact->id }}"><i class="fa fa-trash"></i></a>
                             </td>
                         </tbody>
                         @endforeach

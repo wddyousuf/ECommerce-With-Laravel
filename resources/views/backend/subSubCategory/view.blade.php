@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">All Messages</h1>
+            <h1 class="m-0">Manage SubSubCategory</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-              <li class="breadcrumb-item active">All Messages</li>
+              <li class="breadcrumb-item active">Manage SubSubCategory</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -33,39 +33,45 @@
                 <div class="card-header">
                   <h3>
                     <i class="mr-1 text-info"></i>
-                    All Messages
+                    SubSubCategory
+                    <a href="{{ route('subSubCategory.add') }}" class="btn btn-info float-right "><i class="fa fa-plus-circle ml-1 mr-1"></i>Add SubSubCategory</a>
+
                     </h3>
 
                 </div><!-- /.card-header -->
                 <div class="card-body">
 
 
-                    <table id="example1" class="table table-bordered table-striped table-responsive">
+                    <table id="example1" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                           <th>SL No</th>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Mobile</th>
-                          <th>Address</th>
-                          <th>Message</th>
+                          <th>Category</th>
+                          <th>SubCategory</th>
+                          <th>User</th>
                           <th>Action</th>
                         </tr>
                         </thead>
-                        @foreach ($data as $key=>$contact)
-                        <tbody class="$contact->id">
-                            <td>{{ $key+1 }}</td>
-                            <td>{{ $contact->name }}</td>
-                            <td>{{ $contact->email }}</td>
-                            <td>{{ $contact->number }}</td>
-                            <td>{{ $contact->address }}</td>
-                            <td>{{ $contact->message }}</td>
-                            <td>
-                                <a title="Delete" id="delete" href="{{ route('communicate.delete') }}" class="btn btn-danger btn-xs" data-token="{{ csrf_token() }}" data-id="{{ $contact->id }}"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tbody>
-                        @endforeach
+                        <tbody>
 
+                        @foreach ($all_data as $key=>$subsubCategory)
+                        @php
+                            $counts=App\Model\Product::where('subsubcat_id',$subsubCategory->id)->count();
+                        @endphp
+                        <tr class="{{ $subsubCategory->id }}">
+                            <td>{{ $key+1 }}</td>
+                            <td>{{ $subsubCategory['category']['name'] }}</td>
+                            <td>{{ $subsubCategory['subcategory']['name'] }}</td>
+                            <td>{{ $subsubCategory->name }}</td>
+                            <td>
+                                <a title="Edit" href="{{ route('subSubCategory.edit',$subsubCategory->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+                                @if ($counts<1)
+                                <a title="Delete" id="delete" href="{{ route('subSubCategory.delete') }}" data-token="{{ csrf_token() }}" data-id="{{ $subsubCategory->id }}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
                     </table>
                 </div>
             </div>

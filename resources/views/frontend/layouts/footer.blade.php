@@ -14,19 +14,18 @@
               <li class="media">
                 <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i> </span> </div>
                 <div class="media-body">
-                  <p>ThemesGround, 789 Main rd, Anytown, CA 12345 USA</p>
+                  <p>{{ $contact->address }}</p>
                 </div>
               </li>
               <li class="media">
                 <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span> </div>
                 <div class="media-body">
-                  <p>+(888) 123-4567<br>
-                    +(888) 456-7890</p>
+                  <p>{{ $contact->number }}</p>
                 </div>
               </li>
               <li class="media">
                 <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-envelope fa-stack-1x fa-inverse"></i> </span> </div>
-                <div class="media-body"> <span><a href="#">flipmart@themesground.com</a></span> </div>
+                <div class="media-body"> <span><a href="#">{{ $contact->email }}</a></span> </div>
               </li>
             </ul>
           </div>
@@ -42,8 +41,8 @@
 
           <div class="module-body">
             <ul class='list-unstyled'>
-              <li class="first"><a href="#" title="Contact us">My Account</a></li>
-              <li><a href="#" title="About us">Order History</a></li>
+              <li class="first"><a href="{{ route('contact') }}" title="Contact us">My Account</a></li>
+              <li><a href="{{ route('about') }}" title="About us">Order History</a></li>
               <li><a href="#" title="faq">FAQ</a></li>
               <li><a href="#" title="Popular Searches">Specials</a></li>
               <li class="last"><a href="#" title="Where is my order?">Help Center</a></li>
@@ -84,7 +83,7 @@
               <li><a href="#" title="Blog">Blog</a></li>
               <li><a href="#" title="Company">Company</a></li>
               <li><a href="#" title="Investor Relations">Investor Relations</a></li>
-              <li class=" last"><a href="contact-us.html" title="Suppliers">Contact Us</a></li>
+              <li class=" last"><a href="{{ route('contact') }}" title="Suppliers">Contact Us</a></li>
             </ul>
           </div>
           <!-- /.module-body -->
@@ -96,13 +95,13 @@
     <div class="container">
       <div class="col-xs-12 col-sm-6 no-padding social">
         <ul class="link">
-          <li class="fb pull-left"><a target="_blank" rel="nofollow" href="#" title="Facebook"></a></li>
-          <li class="tw pull-left"><a target="_blank" rel="nofollow" href="#" title="Twitter"></a></li>
-          <li class="googleplus pull-left"><a target="_blank" rel="nofollow" href="#" title="GooglePlus"></a></li>
+          <li class="fb pull-left"><a target="_blank" rel="nofollow" href="{{ $contact->fb_link }}" title="Facebook"></a></li>
+          <li class="tw pull-left"><a target="_blank" rel="nofollow" href="{{ $contact->twitter_link }}" title="Twitter"></a></li>
+          <li class="googleplus pull-left"><a target="_blank" rel="nofollow" href="{{ $contact->gplus_link }}" title="GooglePlus"></a></li>
           <li class="rss pull-left"><a target="_blank" rel="nofollow" href="#" title="RSS"></a></li>
           <li class="pintrest pull-left"><a target="_blank" rel="nofollow" href="#" title="PInterest"></a></li>
-          <li class="linkedin pull-left"><a target="_blank" rel="nofollow" href="#" title="Linkedin"></a></li>
-          <li class="youtube pull-left"><a target="_blank" rel="nofollow" href="#" title="Youtube"></a></li>
+          <li class="linkedin pull-left"><a target="_blank" rel="nofollow" href="{{ $contact->linked_in_link }}" title="Linkedin"></a></li>
+          <li class="youtube pull-left"><a target="_blank" rel="nofollow" href="{{ $contact->youtube_link }}" title="Youtube"></a></li>
         </ul>
       </div>
       <div class="col-xs-12 col-sm-6 no-padding">

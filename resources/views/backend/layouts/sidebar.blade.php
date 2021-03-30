@@ -198,6 +198,56 @@
                 </li>
               </ul>
           </li>
+          <li class="nav-item has-treeview {{ ($prefix=='/subcategory')?'menu-open': '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                SubCategory Management
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('subCategory.view') }}" class="nav-link {{ ($route=='subCategory.view')?'active':'' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View SubCategory</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('subCategory.add') }}" class="nav-link {{ ($route=='subCategory.add')?'active':'' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add SubCategory</p>
+                  </a>
+                </li>
+              </ul>
+          </li>
+          <li class="nav-item has-treeview {{ ($prefix=='/subsubcategory')?'menu-open': '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                SubSubCategory Management
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('subSubCategory.view') }}" class="nav-link {{ ($route=='subSubCategory.view')?'active':'' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View SubSubCategory</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('subSubCategory.add') }}" class="nav-link {{ ($route=='subSubCategory.add')?'active':'' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add SubSubCategory</p>
+                  </a>
+                </li>
+              </ul>
+          </li>
           <li class="nav-item has-treeview {{ ($prefix=='/brand')?'menu-open': '' }}">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>

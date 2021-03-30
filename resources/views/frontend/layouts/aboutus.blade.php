@@ -9,7 +9,7 @@
 						<u> About Us</u>
 					</h2>
 					<p>
-                        {{ $data->about }}
+                        {{ $about->about }}
 					</p>
 				</div>
 			</div>

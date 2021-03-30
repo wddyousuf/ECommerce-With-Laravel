@@ -58,7 +58,7 @@
                                 alt="Logo" style="height: 100px; width:100px;"></td>
                             <td>
                                 <a title="Edit" href="{{ route('logo.edit',$logo->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
-                                <a title="Delete" id="delete" href="{{ route('logo.delete') }}" class="btn btn-danger btn-xs" data-token="{{ csrf_token() }}" data-id="{{ $logo->id }}><i class="fa fa-trash"></i></a>
+                                <a title="Delete" id="delete" href="{{ route('logo.delete') }}" class="btn btn-danger btn-xs" data-token="{{ csrf_token() }}" data-id="{{ $logo->id }}"><i class="fa fa-trash"></i></a>
                             </td>
                         </tbody>
                         @endforeach

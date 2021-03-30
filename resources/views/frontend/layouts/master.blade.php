@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="{{ asset('frontend') }}/css/animate.min.css">
 <link rel="stylesheet" href="{{ asset('frontend') }}/css/rateit.css">
 <link rel="stylesheet" href="{{ asset('frontend') }}/css/bootstrap-select.min.css">
+<link href="{{ asset('frontend') }}/css/lightbox.css" rel="stylesheet">
 
 
 <!-- Icons/Glyphs -->
@@ -34,7 +35,6 @@
 </head>
 <body class="cnt-home">
 
-{{--  Header   --}}
 @include('frontend.layouts.header')
 
 
@@ -43,13 +43,10 @@
     <div class="row">
 
 
-{{--  SideBar  --}}
-
-
-
 @yield('content')
-
-{{--  Footer   --}}
+    </div>
+  </div>
+</div>
 
 @include('frontend.layouts.footer')
 
@@ -57,7 +54,7 @@
 
 <!-- For demo purposes – can be removed on production -->
 
-<!-- For demo purposes – can be removed on production : End -->
+<!-- For demo purposes – can be removed on production  End -->
 
 <!-- JavaScripts placed at the end of the document so the pages load faster -->
 <script src="{{asset('frontend/js')}}/jquery-1.11.1.min.js"></script>
@@ -68,7 +65,7 @@
 <script src="{{asset('frontend/js')}}/jquery.easing-1.3.min.js"></script>
 <script src="{{asset('frontend/js')}}/bootstrap-slider.min.js"></script>
 <script src="{{asset('frontend/js')}}/jquery.rateit.min.js"></script>
-<script type="text/javascript" src="{{asset('frontend/js')}}/lightbox.min.js"></script>
+<script type="text/javascript" src="{{asset('frontend')}}/js/lightbox.min.js"></script>
 <script src="{{asset('frontend/js')}}/bootstrap-select.min.js"></script>
 <script src="{{asset('frontend/js')}}/wow.min.js"></script>
 <script src="{{asset('frontend/js')}}/scripts.js"></script>

@@ -15,6 +15,8 @@ use App\Http\Controllers\FrontController;
 
 Route::get('/', 'FrontendController@index')->name('hmpg');
 Route::get('/about', 'FrontendController@about')->name('about');
+Route::get('/detail/{slug}', 'FrontendController@detail')->name('product.detail');
+Route::get('/products/category-wise/{id}', 'FrontendController@catwise')->name('product.catwise');
 Route::get('/contacts', 'FrontendController@contact')->name('contact');
 Route::post('/contacts/store', 'FrontendController@store')->name('client.message');
 Route::get('/shopping/cart', 'FrontendController@cart')->name('shopping.cart');
@@ -83,6 +85,22 @@ Route::group(['middleware'=>'auth'],function(){
         Route::post('/update/{id}','backend\CategoryController@update')->name('category.update');
         Route::post('/delete','backend\CategoryController@delete')->name('category.delete');
     });
+    Route::prefix('/subcategory')->group(function(){
+        Route::get('/view','backend\SubCategoryController@view')->name('subCategory.view');
+        Route::get('/add','backend\SubCategoryController@add')->name('subCategory.add');
+        Route::post('/store','backend\SubCategoryController@store')->name('subCategory.store');
+        Route::get('/edit/{id}','backend\SubCategoryController@edit')->name('subCategory.edit');
+        Route::post('/update/{id}','backend\SubCategoryController@update')->name('subCategory.update');
+        Route::post('/delete','backend\SubCategoryController@delete')->name('subCategory.delete');
+    });
+    Route::prefix('/subsubcategory')->group(function(){
+        Route::get('/view','backend\SubSubCategoryController@view')->name('subSubCategory.view');
+        Route::get('/add','backend\SubSubCategoryController@add')->name('subSubCategory.add');
+        Route::post('/store','backend\SubSubCategoryController@store')->name('subSubCategory.store');
+        Route::get('/edit/{id}','backend\SubSubCategoryController@edit')->name('subSubCategory.edit');
+        Route::post('/update/{id}','backend\SubSubCategoryController@update')->name('subSubCategory.update');
+        Route::post('/delete','backend\SubSubCategoryController@delete')->name('subSubCategory.delete');
+    });
     Route::prefix('/brand')->group(function(){
         Route::get('/view','backend\BrandController@view')->name('brand.view');
         Route::get('/add','backend\BrandController@add')->name('brand.add');
@@ -113,6 +131,7 @@ Route::group(['middleware'=>'auth'],function(){
         Route::post('/store','backend\ProductController@store')->name('product.store');
         Route::get('/edit/{id}','backend\ProductController@edit')->name('product.edit');
         Route::post('/update/{id}','backend\ProductController@update')->name('product.update');
+        Route::get('/details/{id}','backend\ProductController@details')->name('product.datails');
         Route::post('/delete','backend\ProductController@delete')->name('product.delete');
     });
 

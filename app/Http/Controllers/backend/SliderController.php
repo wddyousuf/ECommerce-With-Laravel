@@ -20,8 +20,8 @@ class SliderController extends Controller
         $editData=Slider::find($id);
         return view('backend.slider.edit',compact('editData'));
     }
-    public function delete($id){
-        $data=Slider::find($id);
+    public function delete(Request $request){
+        $data=Slider::find($request->id);
         if (file_exists('upload/slider/' . $data->slider) AND ! empty ($data->slider)) {
             unlink('upload/slider/'.$data->slider);
         }
