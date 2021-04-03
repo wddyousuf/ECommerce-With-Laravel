@@ -7,11 +7,30 @@
       <div class="header-top-inner">
         <div class="cnt-account">
           <ul class="list-unstyled">
+            @if (@Auth::user()->id !=NULL)
+            <li><a href="{{ route('dashboard') }}"><i class="icon fa fa-user"></i>Dashboard</a></li>
+            <li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
+            <li><a href="{{ route('shopping.cart') }}"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
+            @if (@Auth::user()->id != NULL)
+            <li><a href="{{ route('checkout') }}"><i class="icon fa fa-check"></i>Checkout</a></li>
+            @else
+            <li><a href="{{ route('cstmr.login') }}"><i class="icon fa fa-check"></i>Checkout</a></li>
+            @endif
+            <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="icon fa fa-lock"></i>Logout</a></li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+              </form>
+            @else
             <li><a href="#"><i class="icon fa fa-user"></i>My Account</a></li>
             <li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
             <li><a href="{{ route('shopping.cart') }}"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
-            <li><a href="#"><i class="icon fa fa-check"></i>Checkout</a></li>
-            <li><a href="#"><i class="icon fa fa-lock"></i>Login</a></li>
+            @if (@Auth::user()->id != NULL)
+            <li><a href="{{ route('checkout') }}"><i class="icon fa fa-check"></i>Checkout</a></li>
+            @else
+            <li><a href="{{ route('cstmr.login') }}"><i class="icon fa fa-check"></i>Checkout</a></li>
+            @endif
+            <li><a href="{{ route('cstmr.login') }}"><i class="icon fa fa-lock"></i>Login</a></li>
+            @endif
           </ul>
         </div>
         <!-- /.cnt-account -->
@@ -81,38 +100,68 @@
 
         <div class="col-xs-12 col-sm-12 col-md-2 animate-dropdown top-cart-row">
           <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
+          @php
+          $content=Cart::content();
+          $count=0;
+          $total=0;
+          @endphp
+          @foreach ($content as $item)
+            @php
+            $count++;
+            $total= $total+$item->subtotal;
+            @endphp
+          @endforeach
 
           <div class="dropdown dropdown-cart"> <a href="#" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
             <div class="items-cart-inner">
               <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
-              <div class="basket-item-count"><span class="count">2</span></div>
-              <div class="total-price-basket"> <span class="lbl">cart -</span> <span class="total-price"> <span class="sign">$</span><span class="value">600.00</span> </span> </div>
+              <div class="basket-item-count"><span class="count">{{ $count }}</span></div>
+              <div class="total-price-basket"> <span class="lbl">cart -</span> <span class="total-price"> <span class="sign">৳ </span><span class="value">{{ $total }}</span> </span> </div>
             </div>
             </a>
             <ul class="dropdown-menu">
-              <li>
-                <div class="cart-item product-summary">
-                  <div class="row">
-                    <div class="col-xs-4">
-                      <div class="image"> <a href="detail.html"><img src="{{asset('frontend/images')}}/cart.jpg" alt=""></a> </div>
-                    </div>
-                    <div class="col-xs-7">
-                      <h3 class="name"><a href="index8a95.html?page-detail">Simple Product</a></h3>
-                      <div class="price">$600.00</div>
-                    </div>
-                    <div class="col-xs-1 action"> <a href="#"><i class="fa fa-trash"></i></a> </div>
-                  </div>
+            @php
+          $content=Cart::content();
+          $total=0;
+          @endphp
+          @foreach ($content as $item)
+          <li>
+            <div class="cart-item product-summary">
+              <div class="row">
+                <div class="col-xs-4">
+                  <div class="image"> <a href="#"><img src="{{asset('upload/product')}}/{{ $item->options->image }}" alt="{{ $item->name }}"></a> </div>
                 </div>
-                <!-- /.cart-item -->
-                <div class="clearfix"></div>
-                <hr>
-                <div class="clearfix cart-total">
-                  <div class="pull-right"> <span class="text">Sub Total :</span><span class='price'>$600.00</span> </div>
-                  <div class="clearfix"></div>
-                  <a href="checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a> </div>
-                <!-- /.cart-total-->
+                <div class="col-xs-7">
+                  <h3 class="name"><a href="#">{{ $item->name }}</a></h3>
+                  <div class="price">Qty: {{ $item->qty }}</div>
+                  <div class="price">Price: ৳ {{ $item->price }}</div>
 
-              </li>
+                </div>
+                <div class="col-xs-1 action"> <a href="{{ route('cart.delete',$item->rowId) }}"><i class="fa fa-trash"></i></a> </div>
+              </div>
+            </div>
+            <!-- /.cart-item -->
+
+            <div class="clearfix"></div>
+              <hr>
+
+          </li>
+          @php
+          $total= $total+$item->subtotal;
+          @endphp
+         @endforeach
+         <div class="clearfix"></div>
+                <div class="clearfix cart-total">
+                  <div class="pull-right"> <span class="text">Sub Total :</span><span class='price'>৳ {{ $total }}</span> </div>
+                  <div class="clearfix"></div>
+                  <a href="{{ route('shopping.cart') }}" class="btn btn-upper btn-primary btn-block m-t-20">View Cart</a> </div>
+                  @if (@Auth::user()->id != NULL)
+                  <a href="{{ route('checkout') }}" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a> </div>
+                  @else
+                  <a href="{{ route('cstmr.login') }}" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a> </div>
+                  @endif
+
+                <!-- /.cart-total-->
             </ul>
             <!-- /.dropdown-menu-->
           </div>
@@ -208,7 +257,9 @@
                     </li>
                   </ul>
                 </li>
-                <li class="dropdown  navbar-right special-menu"> <a href="#">Todays offer</a> </li>
+                @if (@Auth::user()->id !=NULL)
+                <li class="dropdown  navbar-right special-menu"> <a href="#">My Orders</a> </li>
+                @endif
               </ul>
               <!-- /.navbar-nav -->
               <div class="clearfix"></div>

@@ -60,5 +60,9 @@ class UserController extends Controller
         $data->save();
         return redirect()->route('user.view')->with('success', 'Data Inserted Successfully ');
     }
+    public function userUnverified(){
+        $db_data['all_data']=User::where('status','0')->where('role','customer')->get();
+        return view('backend.user.unverified',$db_data);
+    }
 }
 

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Model\Logo;
 use App\Model\Product;
+use App\Model\ProductSize;
+use App\Model\Size;
 use App\Model\Slider;
 use App\User;
 //use Illuminate\Support\Facades\Mail;
@@ -26,7 +28,7 @@ class FrontendController extends Controller
         $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
         $data['product']=Product::orderBy('id','desc')->get();
         $data['products']=Product::orderBy('id','asc')->get();
-        $data['user']=User::all();
+        $data['user']=User::where('role','admin')->get();
         return view('frontend.layouts.index',$data);
     }
     public function about(){
@@ -40,7 +42,7 @@ class FrontendController extends Controller
         $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
         $data['product']=Product::orderBy('id','desc')->get();
         $data['products']=Product::orderBy('id','asc')->get();
-        $data['user']=User::all();
+        $data['user']=User::where('role','admin')->all();
         return view('frontend.layouts.aboutus',$data);
     }
     public function contact(){
@@ -54,7 +56,7 @@ class FrontendController extends Controller
         $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
         $data['product']=Product::orderBy('id','desc')->get();
         $data['products']=Product::orderBy('id','asc')->get();
-        $data['user']=User::all();
+        $data['user']=User::where('role','admin')->all();
         return view('frontend.layouts.contactus',$data);
     }
     public function store(Request $request){
@@ -83,9 +85,7 @@ class FrontendController extends Controller
 
         return redirect()->back()->with('success','Your Message has sent successfully.');
     }
-    public function cart(){
-        return view('frontend.pages.cart');
-    }
+
     public function detail($slug){
         $data['logo']=Logo::first();
         $data['sliders']=Slider::all();
@@ -94,7 +94,7 @@ class FrontendController extends Controller
         $data['subcategory']=Product::select('subcat_id')->groupBy('subcat_id')->get();
         $data['subsubcategory']=Product::select('subsubcat_id')->groupBy('subsubcat_id')->get();
         $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
-        $data['user']=User::all();
+        $data['user']=User::where('role','admin')->all();
         $data['product']=Product::where('slug',$slug)->first();
         $data['products']=Product::orderBy('id','asc')->get();
         return view('frontend.pages.detail',$data);
@@ -107,7 +107,7 @@ class FrontendController extends Controller
         $data['subcategory']=Product::select('subcat_id')->groupBy('subcat_id')->get();
         $data['subsubcategory']=Product::select('subsubcat_id')->groupBy('subsubcat_id')->get();
         $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
-        $data['user']=User::all();
+        $data['user']=User::where('role','admin')->all();
         $data['products']=Product::orderBy('id','asc')->get();
         $data['catwise']=Product::where('subsubcat_id',$id)->get();
         return view('frontend.pages.catwise',$data);

@@ -44,6 +44,14 @@
                   </a>
                 </li>
               </ul>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('user.unverified') }}" class="nav-link {{ ($route=='user.unverified')?'active':'' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Unverified Customer</p>
+                  </a>
+                </li>
+              </ul>
           </li>
           @endif
           <li class="nav-item has-treeview {{ ($prefix=='/profiles')?'menu-open': '' }}">

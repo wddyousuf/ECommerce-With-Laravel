@@ -19,14 +19,35 @@ Route::get('/detail/{slug}', 'FrontendController@detail')->name('product.detail'
 Route::get('/products/category-wise/{id}', 'FrontendController@catwise')->name('product.catwise');
 Route::get('/contacts', 'FrontendController@contact')->name('contact');
 Route::post('/contacts/store', 'FrontendController@store')->name('client.message');
-Route::get('/shopping/cart', 'FrontendController@cart')->name('shopping.cart');
+//Cart Controller
+Route::post('/product/cart','CartController@addToCart')->name('product.cart');
+Route::get('/shopping/cart', 'CartController@cart')->name('shopping.cart');
+Route::post('/shopping/cartupdate', 'CartController@cartUpdate')->name('cart.update');
+Route::get('/shopping/cartdelete/{rowId}', 'CartController@cartDelete')->name('cart.delete');
+//Customer Controller
+Route::get('/customerLogin','CustomerController@login')->name('cstmr.login');
+Route::get('/customerVerify','CustomerController@verify')->name('cstmr.verify');
+Route::post('/customerVerify','CustomerController@verifyuser')->name('cstmr.verifyuser');
+Route::post('/customerSignup','CustomerController@signup')->name('cstmr.signup');
+Route::post('/customerSignupStore','CustomerController@signupstore')->name('cstmr.signupstore');
+
+Route::get('/checkout','CheckoutController@checkout')->name('checkout');
+
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware'=>['auth','customer']],function(){
+    Route::get('/dashboard','DashboardController@dashboard')->name('dashboard');
+    Route::get('/editProdile','DashboardController@edit')->name('edit.profile');
+    Route::post('/editProdile/{id}','DashboardController@store')->name('store.profile');
+    Route::get('/ResetPassword','DashboardController@resetrequest')->name('resetget.profile');
+    Route::post('/ResetPassword','DashboardController@reset')->name('reset.profile');
+});
 
 
-Route::group(['middleware'=>'auth'],function(){
+Route::group(['middleware'=>['auth','admin']],function(){
+    Route::get('/home', 'HomeController@index')->name('home');
     Route::prefix('/user')->group(function(){
         Route::get('/view','backend\UserController@userView')->name('user.view');
         Route::get('/add','backend\UserController@userAdd')->name('user.add');
@@ -34,6 +55,7 @@ Route::group(['middleware'=>'auth'],function(){
         Route::get('/edit/{id}','backend\UserController@userEdit')->name('user.edit');
         Route::post('/update/{id}','backend\UserController@userUpdate')->name('user.update');
         Route::post('/delete','backend\UserController@userDelete')->name('user.delete');
+        Route::get('/viewUnverified','backend\UserController@userUnverified')->name('user.unverified');
     });
     Route::prefix('/profiles')->group(function(){
         Route::get('/view','backend\ProfileController@profilesView')->name('profiles.view');

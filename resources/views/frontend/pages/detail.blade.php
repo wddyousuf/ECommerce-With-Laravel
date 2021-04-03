@@ -118,34 +118,79 @@
                             </div>
 
                         </div><!-- /.row -->
+                        @php
+                            $size=App\Model\ProductSize::where('product_id',$product->id)->get();
+                            $color=App\Model\ProductColor::where('product_id',$product->id)->get();
+                        @endphp
                     </div><!-- /.price-container -->
-
-                    <div class="quantity-container info-container">
-                        <div class="row">
-
-                            <div class="col-sm-2">
-                                <span class="label">Qty :</span>
+                    <form action="{{ route('product.cart') }}" method="POST">
+                        @csrf
+                        <input type="hidden" value="{{ $product->id }}" id="id" name="id">
+                        @if(!empty($product->discount_price))
+                        <input type="hidden" value="{{ $product->discount_price }}" id="price" name="price">
+                        @else
+                        <input type="hidden" value="{{ $product->price }}" id="price" name="price">
+                        @endif
+                        <div class="quantity-container info-container">
+                            <div>
+                                @error('color')
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ $message }}</strong>
+                                    </div>
+                                @enderror
+                                @error('size')
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ $message }}</strong>
+                                    </div>
+                                @enderror
                             </div>
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <label for="size">Size</label>
+                                    <select name="size" id="size" class="form-control select2">
+                                        <option value="">Select Size</option>
+                                        @foreach ($size as $item)
+                                        <option value="{{ $item['size']['id'] }}">{{ $item['size']['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="color">Color</label>
+                                    <select name="color" id="color" class="form-control select2">
+                                        <option value="">Select Color</option>
+                                        @foreach ($color as $item)
+                                        <option value="{{ $item['color']['id'] }}">{{ $item['color']['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-                            <div class="col-sm-2">
-                                <div class="cart-quantity">
-                                    <div class="quant-input">
-                                        <div class="arrows">
-                                            <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
-                                            <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
-                                        </div>
-                                        <input type="text" value="1">
+                            </div><!-- /.row -->
+                        </div><!-- /.SIZE and Color-container -->
+                        <div class="quantity-container info-container">
+                            <div class="row">
+
+                                <div class="col-sm-2">
+                                    <span class="label">Qty :</span>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="cart-quantity">
+                                        <div class="quantity">
+                                            <input type="number" class="form-control" min="1" max="20" value="1" name="qty" id="qty">
+                                          </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-sm-7">
-                                <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
-                            </div>
+                                <div class="col-sm-7">
+                                    <button  type="submit" class="btn btn-primary" name="submit" id="submit"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</button>
+                                </div>
 
 
-                        </div><!-- /.row -->
-                    </div><!-- /.quantity-container -->
+                            </div><!-- /.row -->
+                        </div><!-- /.quantity-container -->
+                    </form>
 
 
                 </div><!-- /.product-info -->
@@ -335,12 +380,8 @@
                                         <div class="cart clearfix animate-effect">
                                             <div class="action">
                                                 <ul class="list-unstyled">
-                                                    <li class="add-cart-button btn-group">
-                                                        <button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-                                                            <i class="fa fa-shopping-cart"></i>
-                                                        </button>
-                                                        <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-
+                                                    <li class="lnk">
+                                                        <a href="{{ route('product.detail',$item->slug) }}" data-toggle="tooltip" class="add-to-cart" title="Add To Cart"><i class="fa fa-shopping-cart"></i></a>
                                                     </li>
 
                                                     <li class="lnk wishlist">

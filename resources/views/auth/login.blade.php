@@ -15,6 +15,12 @@
          <div class="panel-body">
            <div class="row">
              <div class="col-lg-12">
+                 @if (Session::get('message'))
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dissmiss="alert">&times;</button>
+                            <strong>{{ Session::get('message') }}</strong>
+                    </div>
+                 @endif
                <form id="login-form" action="{{ route('login') }}" method="POST" style="display: block;">
                    @csrf
                  <h2>LOGIN</h2>
