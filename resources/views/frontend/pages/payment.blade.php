@@ -78,21 +78,24 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12" style="margin-top: 10px;">
-                                            @error('email')
+                                            @error('method')
                                             <div class="alert alert-danger alert-dismissable">
                                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                                                 <strong>{{ $message }}</strong>
                                                 </div>
                                             @enderror
-                                            @error('mobile')
+                                            @if(Session::get('message'))
                                             <div class="alert alert-danger alert-dismissable">
                                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                                <strong>{{ $message }}</strong>
+                                                <strong>{{Session::get('message')}}</strong>
                                                 </div>
-                                            @enderror
+                                            @endif
                                         </div>
                                         <form action="{{ route('paymentstore') }}" method="POST">
                                             @csrf
+                                            @foreach ($content as $item)
+                                            <input type="hidden" name="product_id" value="{{ $item->id }}">
+                                            @endforeach
                                             <input type="hidden" name="amount" value="{{ $total }}">
                                             <div class="form-group">
 

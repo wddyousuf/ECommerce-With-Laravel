@@ -11,8 +11,10 @@
             <li><a href="{{ route('dashboard') }}"><i class="icon fa fa-user"></i>Dashboard</a></li>
             <li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
             <li><a href="{{ route('shopping.cart') }}"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
-            @if (@Auth::user()->id != NULL)
+            @if (@Auth::user()->id != NULL && @Session::get('shipping_id')==NULL)
             <li><a href="{{ route('checkout') }}"><i class="icon fa fa-check"></i>Checkout</a></li>
+            @elseif(@Auth::user()->id != NULL && @Session::get('shipping_id') !=NULL)
+            <li><a href="{{ route('payment') }}"><i class="icon fa fa-check"></i>Checkout</a></li>
             @else
             <li><a href="{{ route('cstmr.login') }}"><i class="icon fa fa-check"></i>Checkout</a></li>
             @endif
@@ -24,8 +26,10 @@
             <li><a href="#"><i class="icon fa fa-user"></i>My Account</a></li>
             <li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
             <li><a href="{{ route('shopping.cart') }}"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
-            @if (@Auth::user()->id != NULL)
+            @if (@Auth::user()->id != NULL && @Session::get('shipping_id')==NULL)
             <li><a href="{{ route('checkout') }}"><i class="icon fa fa-check"></i>Checkout</a></li>
+            @elseif(@Auth::user()->id != NULL && @Session::get('shipping_id') !=NULL)
+            <li><a href="{{ route('payment') }}"><i class="icon fa fa-check"></i>Checkout</a></li>
             @else
             <li><a href="{{ route('cstmr.login') }}"><i class="icon fa fa-check"></i>Checkout</a></li>
             @endif

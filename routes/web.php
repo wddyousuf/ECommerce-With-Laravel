@@ -163,5 +163,16 @@ Route::group(['middleware'=>['auth','admin']],function(){
         Route::get('/details/{id}','backend\ProductController@details')->name('product.datails');
         Route::post('/delete','backend\ProductController@delete')->name('product.delete');
     });
+    Route::prefix('/order')->group(function(){
+        Route::get('/viewpending','backend\OrderController@viewpending')->name('pending');
+        Route::get('/viewapproved','backend\OrderController@viewapproved')->name('approved');
+        Route::get('/add','backend\ProductController@add')->name('product.add');
+        Route::post('/store','backend\ProductController@store')->name('product.store');
+        Route::get('/edit/{id}','backend\ProductController@edit')->name('product.edit');
+        Route::post('/update/{id}','backend\ProductController@update')->name('product.update');
+        Route::get('/details/{id}','backend\ProductController@details')->name('product.datails');
+        Route::get('/approve/{id}','backend\OrderController@approve')->name('approve');
+        Route::post('/cancel/{id}','backend\OrderController@cancel')->name('cancel');
+    });
 
 });

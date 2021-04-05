@@ -356,6 +356,31 @@
                 </li>
               </ul>
           </li>
+          <li class="nav-item has-treeview {{ ($prefix=='/order')?'menu-open': '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Order Management
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('approved') }}" class="nav-link {{ ($route=='approved')?'active':'' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Approved Orders</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('pending') }}" class="nav-link {{ ($route=='pending')?'active':'' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pending Orders</p>
+                  </a>
+                </li>
+              </ul>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

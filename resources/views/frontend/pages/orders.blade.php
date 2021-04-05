@@ -10,7 +10,10 @@
                     <td>Color</td>
                     <td>Size</td>
                     <td>Qty</td>
+                    <td>Status</td>
                     <td>Order Date</td>
+                    <td>Amount</td>
+                    <td>Payment Method</td>
                 </tr>
                 @foreach ($order as $item)
                 @php
@@ -45,7 +48,10 @@
                         {{ $items->qty }} <br>
                         @endforeach
                     </td>
+                    <td>{{ ($item->status==0)? 'Pending' : 'Approved' }}</td>
                     <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                    <td>৳ {{ $item->amount }}</td>
+                    <td>{{ strtoupper($item['method']['method']) }}</td>
                 </tr>
                 @endforeach
             </table>

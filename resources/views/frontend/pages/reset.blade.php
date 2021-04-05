@@ -12,8 +12,10 @@
                   <a href="{{ route('edit.profile') }}" class="list-group-item list-group-item-action"><i class="fa fa-edit"></i> Edit Profile</a>
                   <a href="" class="list-group-item list-group-item-action"><i class="icon fa fa-heart"></i> Wishlist</a>
                   <a href="{{ route('shopping.cart') }}" class="list-group-item list-group-item-action "><i class="icon fa fa-shopping-cart"></i> My Cart</a>
-                  @if (@Auth::user()->id != NULL)
+                  @if (@Auth::user()->id != NULL && @Session::get('shipping_id')==NULL)
                   <a href="{{ route('checkout') }}" class="list-group-item list-group-item-action "><i class="icon fa fa-check"></i> Checkout</a>
+                  @elseif(@Auth::user()->id != NULL && @Session::get('shipping_id')!=NULL)
+                  <a href="{{ route('payment') }}" class="list-group-item list-group-item-action "><i class="icon fa fa-check"></i> Checkout</a>
                   @else
                   <a href="{{ route('cstmr.login') }}" class="list-group-item list-group-item-action "><i class="icon fa fa-check"></i> Checkout</a>
                   @endif
