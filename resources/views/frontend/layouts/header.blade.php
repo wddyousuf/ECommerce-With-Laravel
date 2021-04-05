@@ -258,7 +258,7 @@
                   </ul>
                 </li>
                 @if (@Auth::user()->id !=NULL)
-                <li class="dropdown  navbar-right special-menu"> <a href="#">My Orders</a> </li>
+                <li class="dropdown  navbar-right special-menu"> <a href="{{ route('orders') }}">My Orders</a> </li>
                 @endif
               </ul>
               <!-- /.navbar-nav -->

@@ -9,6 +9,7 @@ use App\Model\Communicate;
 use App\Model\Contact;
 use Auth;
 use App\Model\Logo;
+use App\Model\Order;
 use App\Model\Product;
 use App\Model\ProductSize;
 use App\Model\Size;
@@ -17,6 +18,7 @@ use App\User;
 use Cart;
 use DB;
 use Mail;
+
 class CustomerController extends Controller
 {
     public function login(){
@@ -105,5 +107,15 @@ class CustomerController extends Controller
         }
 
 
+    }
+    public function orders(){
+        $data['logo']=Logo::first();
+        $data['sliders']=Slider::all();
+        $data['contact']=Contact::first();
+        $data['category']=Product::select('cat_id')->groupBy('cat_id')->get();
+        $data['subcategory']=Product::select('subcat_id')->groupBy('subcat_id')->get();
+        $data['subsubcategory']=Product::select('subsubcat_id')->groupBy('subsubcat_id')->get();
+        $data['order']=Order::where('user_id',Auth::user()->id)->get();
+        return view('frontend.pages.orders',$data);
     }
 }

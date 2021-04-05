@@ -31,7 +31,7 @@ Route::post('/customerVerify','CustomerController@verifyuser')->name('cstmr.veri
 Route::post('/customerSignup','CustomerController@signup')->name('cstmr.signup');
 Route::post('/customerSignupStore','CustomerController@signupstore')->name('cstmr.signupstore');
 
-Route::get('/checkout','CheckoutController@checkout')->name('checkout');
+
 
 
 
@@ -43,6 +43,13 @@ Route::group(['middleware'=>['auth','customer']],function(){
     Route::post('/editProdile/{id}','DashboardController@store')->name('store.profile');
     Route::get('/ResetPassword','DashboardController@resetrequest')->name('resetget.profile');
     Route::post('/ResetPassword','DashboardController@reset')->name('reset.profile');
+
+
+    Route::get('/checkout','CheckoutController@checkout')->name('checkout');
+    Route::post('/checkout','CheckoutController@checkoutbill')->name('checkoutbill');
+    Route::get('/payment','CheckoutController@payment')->name('payment');
+    Route::post('/payment','CheckoutController@paymentstore')->name('paymentstore');
+    Route::get('/orders','CustomerController@orders')->name('orders');
 });
 
 

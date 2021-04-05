@@ -17,7 +17,7 @@
                   @else
                   <a href="{{ route('cstmr.login') }}" class="list-group-item list-group-item-action "><i class="icon fa fa-check"></i> Checkout</a>
                   @endif
-                    <a href="" class="list-group-item list-group-item-action "><i class="fa fa-area-chart"></i> All Orders</a>
+                    <a href="{{ route('orders') }}" class="list-group-item list-group-item-action "><i class="fa fa-area-chart"></i> All Orders</a>
                     <a href="{{ route('resetget.profile') }}" class="list-group-item list-group-item-action "><i class="fa fa-edit"></i> Reset Password</a>
                     <a href="{{ route('logout') }}" class="list-group-item list-group-item-action " onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="icon fa fa-lock"></i> Logout</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

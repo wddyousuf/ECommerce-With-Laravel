@@ -94,7 +94,7 @@ class FrontendController extends Controller
         $data['subcategory']=Product::select('subcat_id')->groupBy('subcat_id')->get();
         $data['subsubcategory']=Product::select('subsubcat_id')->groupBy('subsubcat_id')->get();
         $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
-        $data['user']=User::where('role','admin')->all();
+        $data['user']=User::where('role','admin')->get();
         $data['product']=Product::where('slug',$slug)->first();
         $data['products']=Product::orderBy('id','asc')->get();
         return view('frontend.pages.detail',$data);
