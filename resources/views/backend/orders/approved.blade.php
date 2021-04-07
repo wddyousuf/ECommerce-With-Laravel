@@ -51,6 +51,7 @@
                           <th>Payment Method</th>
                           <th>Transaction No</th>
                           <th>Address</th>
+                          <th>Invoice</th>
                           <th>Action</th>
                         </tr>
                         </thead>
@@ -78,10 +79,11 @@
                             </td>
                             <td>{{ $order['method']['transaction_no'] }}</td>
                             <td>{{ $order['shipping']['address'] }}</td>
+                            <td><a href="{{ route('invoice',$order->id) }}" class="btn btn-warning" type="button" value="Print">Invoice</a></td>
                             <td>
-                                <a title="Shipped" href="{{ route('approve',$order->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-check-circle"></i></a>
-                                <a title="Delivered" href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
-                                <a title="Picked" href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                                <a title="Picked" href="{{ route('picked',$order->id) }}" class="btn btn-success btn-xs"><i class="fa fa-gift"></i></a>
+                                <a title="Shipped" href="{{ route('shipped',$order->id) }}" class="btn btn-warning btn-xs"><i class="fa fa-truck-moving"></i></a>
+                                <a title="Delivered" href="{{ route('delivered',$order->id) }}" class="btn btn-info btn-xs"><i class="fa fa-check-circle"></i></a>
                             </td>
                         </tr>
                         @endforeach

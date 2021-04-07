@@ -70,6 +70,10 @@
                                 <label for="name">Category Name</label>
                                 <input type="text" id="name" value="{{ @$editData->name }}" class="form-control" name="name">
                               </div>
+                              <div class="form-group col-md-4">
+                                <label for="faname">FontAwesome Icon Name</label>
+                                <input type="text" id="faname" value="{{ @$editData->faname }}" class="form-control" name="faname">
+                              </div>
                         </div>
                         <div>
                             <input type="submit" value="{{ (@$editData)?'Update Category':'Add Category' }}" class="btn btn-success">

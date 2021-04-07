@@ -111,15 +111,15 @@
                                             </div>
                                             <div class="show_field" style="display: none; margin-bottom:10px;">
                                                 <span class="form-control" style="margin-bottom:5px;">Bkash No: 01521309208</span>
-                                                <input type="text" name="tran" class="form-control" placeholder="Transaction No">
+                                                <input type="text" name="btran" class="form-control" placeholder="Transaction No">
                                             </div>
                                             <div class="show_field1" style="display: none; margin-bottom:10px;">
                                                 <span class="form-control" style="margin-bottom:5px;">Rocket No: 015213092086</span>
-                                                <input type="text" name="tran" class="form-control" placeholder="Transaction No">
+                                                <input type="text" name="rtran" class="form-control" placeholder="Transaction No">
                                             </div>
                                             <div class="show_field2" style="display: none; margin-bottom:10px;">
                                                 <span class="form-control" style="margin-bottom:5px;">Nagad No: 01521309208</span>
-                                                <input type="text" name="tran" class="form-control" placeholder="Transaction No">
+                                                <input type="text" name="ntran" class="form-control" placeholder="Transaction No">
                                             </div>
                                             <div>
                                                 <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Next</button>
@@ -167,10 +167,16 @@
                 var method= $(this).val();
                 if(method =='bkash'){
                     $('.show_field').show();
+                    $('.show_field1').hide();
+                    $('.show_field2').hide();
                 }else if(method=='rocket'){
                     $('.show_field1').show();
+                    $('.show_field').hide();
+                    $('.show_field2').hide();
                 }else if(method=='nagad'){
                     $('.show_field2').show();
+                    $('.show_field1').hide();
+                    $('.show_field').hide();
                 }else{
                     $('.show_field').hide();
                     $('.show_field1').hide();

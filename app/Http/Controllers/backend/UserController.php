@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function userview(){
-        $db_data['all_data']=User::get();
+        $db_data['all_data']=User::where('role','!=','customer')->get();
         return view('backend.user.users',$db_data);
     }
     public function userAdd(){

@@ -192,7 +192,13 @@
 				<tr>
 					<td>
 						<div class="cart-checkout-btn pull-right">
-							<button type="submit" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</button>
+                            @if (@Auth::user()->id != NULL && @Session::get('shipping_id')==NULL)
+                            <a href="{{ route('checkout') }}" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</a>
+                            @elseif(@Auth::user()->id != NULL && @Session::get('shipping_id')!=NULL)
+                            <a href="{{ route('payment') }}" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</a>
+                            @else
+                            <a href="{{ route('cstmr.login') }}" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</a>
+                            @endif
 							<span class="">Checkout with multiples address!</span>
 						</div>
 					</td>

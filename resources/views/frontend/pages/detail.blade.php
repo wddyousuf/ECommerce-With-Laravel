@@ -66,9 +66,15 @@
                                 </div>
                             </div>
                             <div class="col-sm-9">
-                                <div class="stock-box">
-                                    <span class="value">In Stock ({{ $product->stock }})</span>
-                                </div>
+                                @if ($product->stock != '0')
+                                    <div class="stock-box">
+                                        <span class="value">In Stock ({{ $product->stock }})</span>
+                                    </div>
+                                @else
+                                    <div class="stock-box">
+                                        <span class="value">Out of Stock</span>
+                                    </div>
+                                @endif
                             </div>
                         </div><!-- /.row -->
                     </div><!-- /.stock-container -->
@@ -143,6 +149,12 @@
                                 <div class="alert alert-danger alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                                     <strong>{{ $message }}</strong>
+                                    </div>
+                                @enderror
+                                @if(Session::get('error'))
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ Session::get('error') }}</strong>
                                     </div>
                                 @enderror
                             </div>

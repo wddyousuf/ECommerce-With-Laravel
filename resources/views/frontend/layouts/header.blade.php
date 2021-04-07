@@ -48,12 +48,8 @@
                 <li><a href="#">RS</a></li>
               </ul>
             </li>
-            <li class="dropdown dropdown-small"> <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><span class="value">English </span><b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">English</a></li>
-                <li><a href="#">French</a></li>
-                <li><a href="#">German</a></li>
-              </ul>
+            <li class="dropdown dropdown-small"> <a href="{{ route('track') }}"><span class="value">Track Order </span></a>
+
             </li>
           </ul>
           <!-- /.list-unstyled -->
@@ -81,7 +77,8 @@
           <!-- /.contact-row -->
           <!-- ============================================================= SEARCH AREA ============================================================= -->
           <div class="search-area">
-            <form>
+            <form action="{{ route('find.product') }}" method="POST">
+                @csrf
               <div class="control-group">
                 <ul class="categories-filter animate-dropdown">
                   <li class="dropdown"> <a class="dropdown-toggle"  data-toggle="dropdown" href="category.html">Categories <b class="caret"></b></a>
@@ -94,10 +91,11 @@
                     </ul>
                   </li>
                 </ul>
-                <input class="search-field" placeholder="Search here..." />
-                <a class="search-button" href="#" ></a> </div>
+                <input class="search-field" placeholder="Search here..." autocomplete="off"  name="name" id="productSearch"/>
+                <button class="search-button" type="submit" ></button> </div>
             </form>
           </div>
+          <div class="col-md-12" id="productStatus"></div>
           <!-- /.search-area -->
           <!-- ============================================================= SEARCH AREA : END ============================================================= --> </div>
         <!-- /.top-search-holder -->
@@ -194,13 +192,13 @@
           <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
             <div class="nav-outer">
               <ul class="nav navbar-nav">
-                <li class="active dropdown yamm-fw"> <a href="{{ url('') }}" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
+                <li class="active dropdown yamm-fw"> <a href="{{ url('home') }}" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
                 @foreach ($category as $item)
                 @php
                 $cat=App\Model\Category::where('id',$item->cat_id)->first();
                 $sub_cat=App\Model\SubCategory::where('cat_id',$item->cat_id)->get();
                 @endphp
-                <li class="dropdown yamm mega-menu"> <a href="home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">{{ $cat->name }}</a>
+                <li class="dropdown yamm mega-menu"> <a href="{{ route('category.product',$cat->name) }}" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">{{ $cat->name }}</a>
                   <ul class="dropdown-menu container">
                     <li>
                       <div class="yamm-content ">
@@ -286,3 +284,26 @@
 </header>
 
 <!-- ============================================== HEADER : END ============================================== -->
+
+<script>
+    $(document).ready(function(){
+        $('#productSearch').keyup(function(){
+            var name =$(this).val();
+            if(name != ''){
+                $.ajax({
+                    url: "{{ route('get.product') }}",
+                    type: "GET",
+                    data:{name:name},
+                    success: function(data){
+                        $('#productStatus').fadeIn();
+                        $('#productStatus').html(data);
+                    }
+                });
+            }
+        });
+    });
+    $(document).on('click','li',function(){
+        $('#productSearch').val($(this).text());
+        $('#productStatus').fadeOut();
+    });
+</script>

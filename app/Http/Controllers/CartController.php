@@ -32,25 +32,30 @@ class CartController extends Controller
             'size'=>'required'
         ]);
         $product=Product::where('id',$request->id)->first();
-        $size=Size::where('id',$request->size)->first();
-        $color=Color::where('id',$request->color)->first();
-        cart::add([
-            'id'=>$product->id,
-            'qty'=>$request->qty,
-            'name'=>$product->name,
-            'weight'=>'550',
-            'price'=>$request->price,
+        if ($product->stock != '0') {
+            $product=Product::where('id',$request->id)->first();
+            $size=Size::where('id',$request->size)->first();
+            $color=Color::where('id',$request->color)->first();
+            cart::add([
+                'id'=>$product->id,
+                'qty'=>$request->qty,
+                'name'=>$product->name,
+                'weight'=>'550',
+                'price'=>$request->price,
 
-            'options'=>[
-                'size_id'=> $request->size,
-                'color_id'=>$request->color,
-                'size_name'=>$size->name,
-                'image'=>$product->image,
-                'color_name'=>$color->name
-            ],
+                'options'=>[
+                    'size_id'=> $request->size,
+                    'color_id'=>$request->color,
+                    'size_name'=>$size->name,
+                    'image'=>$product->image,
+                    'color_name'=>$color->name
+                ],
 
-        ]);
-        return redirect()->route('shopping.cart')->with('success','Product Added to cart Successfully');
+            ]);
+            return redirect()->route('shopping.cart')->with('success','Product Added to cart Successfully');
+        }else{
+            return redirect()->back()->with('error','Sorry!!!Product is Out of Stock.');
+        }
     }
     public function cartUpdate(Request $request){
         Cart::update($request->rowId,$request->qty);

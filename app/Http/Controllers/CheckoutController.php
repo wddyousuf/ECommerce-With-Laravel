@@ -69,14 +69,27 @@ public function paymentstore(Request $request){
         $this->validate($request,[
             'method'=>'required'
         ]);
-        if($request->method!=cod && $request->tran== NULL){
-            return redirect()->back()->with('message','Please include Transaction Number');
+        if($request->method!='cod'){
+            if($request->btran== NULL && $request->method=='bkash'){
+                return redirect()->back()->with('message','Please include Bkash Transaction Number');
+            }elseif($request->rtran== NULL && $request->method=='rocket'){
+                return redirect()->back()->with('message','Please include Rocket Transaction Number');
+            }elseif($request->ntran== NULL && $request->method=='nagad'){
+                return redirect()->back()->with('message','Please include Nagad Transaction Number');
+            }
+
         }
 
         DB::transaction(function() use($request){
             $pay=new Payment();
             $pay->method=$request->method;
-            $pay->transaction_no=$request->tran;
+            if($request->method=='bkash'){
+                $pay->transaction_no=$request->btran;
+            }elseif($request->method=='rocket'){
+                $pay->transaction_no=$request->rtran;
+            }elseif($request->method=='nagad'){
+                $pay->transaction_no=$request->ntran;
+            }
             $pay->save();
             $order=new Order();
             $order->user_id=Auth::user()->id;

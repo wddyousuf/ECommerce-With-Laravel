@@ -39,6 +39,7 @@ class CategoryController extends Controller
             'name'=>'unique:categories,name',
         ]);
         $data->name=strtoupper($request->name);
+        $data->faname=$request->faname;
         $data->created_by=Auth::user()->id;
         $data->save();
         return redirect()->route('category.view')->with('success', 'Category Inserted Successfully');

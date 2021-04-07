@@ -80,7 +80,7 @@
                             <td>{{ $order['shipping']['address'] }}</td>
                             <td>
                                 <a title="Approve" href="{{ route('approve',$order->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-check-circle"></i></a>
-                                <a title="Cancel" href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                                <a title="Cancel" href="{{ route('cancel',$order->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                         @endforeach

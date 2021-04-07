@@ -19,6 +19,14 @@ Route::get('/detail/{slug}', 'FrontendController@detail')->name('product.detail'
 Route::get('/products/category-wise/{id}', 'FrontendController@catwise')->name('product.catwise');
 Route::get('/contacts', 'FrontendController@contact')->name('contact');
 Route::post('/contacts/store', 'FrontendController@store')->name('client.message');
+Route::post('/findproduct', 'FrontendController@findproduct')->name('find.product');
+Route::get('/getproduct', 'FrontendController@getproduct')->name('get.product');
+Route::get('/allProducts', 'FrontendController@allproduct')->name('all.product');
+Route::get('/category/{name}', 'FrontendController@categoryproduct')->name('category.product');
+Route::get('/trackOrder', 'FrontendController@track')->name('track');
+Route::post('/trackOrder', 'FrontendController@trackorder')->name('track.order');
+
+
 //Cart Controller
 Route::post('/product/cart','CartController@addToCart')->name('product.cart');
 Route::get('/shopping/cart', 'CartController@cart')->name('shopping.cart');
@@ -166,13 +174,13 @@ Route::group(['middleware'=>['auth','admin']],function(){
     Route::prefix('/order')->group(function(){
         Route::get('/viewpending','backend\OrderController@viewpending')->name('pending');
         Route::get('/viewapproved','backend\OrderController@viewapproved')->name('approved');
-        Route::get('/add','backend\ProductController@add')->name('product.add');
-        Route::post('/store','backend\ProductController@store')->name('product.store');
-        Route::get('/edit/{id}','backend\ProductController@edit')->name('product.edit');
-        Route::post('/update/{id}','backend\ProductController@update')->name('product.update');
-        Route::get('/details/{id}','backend\ProductController@details')->name('product.datails');
         Route::get('/approve/{id}','backend\OrderController@approve')->name('approve');
-        Route::post('/cancel/{id}','backend\OrderController@cancel')->name('cancel');
+        Route::get('/cancel/{id}','backend\OrderController@cancel')->name('cancel');
+        Route::get('/picked/{id}','backend\OrderController@picked')->name('picked');
+        Route::get('/shipped/{id}','backend\OrderController@shipped')->name('shipped');
+        Route::get('/delivered/{id}','backend\OrderController@delivered')->name('delivered');
+        Route::get('/invoice/{id}','backend\OrderController@invoice')->name('invoice');
+
     });
 
 });
