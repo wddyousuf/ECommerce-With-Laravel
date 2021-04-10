@@ -25,6 +25,7 @@ Route::get('/allProducts', 'FrontendController@allproduct')->name('all.product')
 Route::get('/category/{name}', 'FrontendController@categoryproduct')->name('category.product');
 Route::get('/trackOrder', 'FrontendController@track')->name('track');
 Route::post('/trackOrder', 'FrontendController@trackorder')->name('track.order');
+Route::post('/submitReview', 'FrontendController@submit')->name('submit.review');
 
 
 //Cart Controller

@@ -11,6 +11,7 @@ use Auth;
 use App\Model\Logo;
 use App\Model\Order;
 use App\Model\Product;
+use App\Model\ProductReview;
 use App\Model\ProductSize;
 use App\Model\Shipping;
 use App\Model\Size;
@@ -91,6 +92,7 @@ class FrontendController extends Controller
     }
 
     public function detail($slug){
+        $id=Product::where('slug',$slug)->first();
         $data['logo']=Logo::first();
         $data['sliders']=Slider::all();
         $data['contact']=Contact::first();
@@ -101,6 +103,8 @@ class FrontendController extends Controller
         $data['user']=User::where('role','admin')->get();
         $data['product']=Product::where('slug',$slug)->first();
         $data['products']=Product::orderBy('id','asc')->get();
+        $data['review']=ProductReview::where('product_id',$id->id)->get();
+        $data['reviewuser']=ProductReview::where('user_id',Auth::user()->id)->where('product_id',$id->id)->first();
         return view('frontend.pages.detail',$data);
     }
     public function catwise($id){
@@ -212,4 +216,22 @@ class FrontendController extends Controller
             return redirect()->back()->with('error','Sorry!!!Data Not Matched');
         }
     }
+    public function submit(Request $request){
+        $this->validate($request,[
+            'name'=>'required',
+            'rated'=>'required',
+            'user_id'=>'required',
+            'p_id'=>'required',
+            'reviewmsg'=>'required',
+        ]);
+        $review=new ProductReview();
+        $review->user_id=$request->user_id;
+        $review->user_name=$request->name;
+        $review->product_id=$request->p_id;
+        $review->review=$request->rated;
+        $review->description=$request->reviewmsg;
+        $review->save();
+        return redirect()->back()->with('success','Thank you for Review.');
+    }
+
 }

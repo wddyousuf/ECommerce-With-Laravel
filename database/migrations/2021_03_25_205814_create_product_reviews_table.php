@@ -15,6 +15,8 @@ class CreateProductReviewsTable extends Migration
     {
         Schema::create('product_reviews', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('user_id')->nullable();
+            $table->string('user_name')->nullable();
             $table->integer('product_id')->nullable();
             $table->double('review')->nullable();
             $table->string('description')->nullable();

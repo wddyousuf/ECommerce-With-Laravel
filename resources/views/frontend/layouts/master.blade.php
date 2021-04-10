@@ -26,6 +26,11 @@
     }
 </style>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 <!-- Customizable CSS -->
 <link rel="stylesheet" href="{{ asset('frontend') }}/css/main.css">
 <link rel="stylesheet" href="{{ asset('frontend') }}/css/blue.css">

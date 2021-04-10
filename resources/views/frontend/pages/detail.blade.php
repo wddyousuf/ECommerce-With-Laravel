@@ -25,6 +25,8 @@
 
                         <div id="owl-single-product-thumbnails">
                             @php
+                            $count=0;
+                            $rating=0;
                                 $images=App\Model\ProductImage::where('product_id',$product->id)->paginate(6);
                             @endphp
                             @foreach ($images as $item)
@@ -47,12 +49,25 @@
 
                     <div class="rating-reviews m-t-20">
                         <div class="row">
-                            <div class="col-sm-3">
+                            {{--  <div class="col-sm-3">
                                 <div class="rating rateit-small"></div>
-                            </div>
+                            </div>  --}}
+                            @foreach ($review as $item)
+                            @php
+                            $count = $count+1;
+                            $rating=$item->review+$rating;
+                            @endphp
+                            @endforeach
+                            @php
+                                if ($count != 0)
+                                $rate=$rating/$count;
+                                else
+                                $rate=0;
+                            @endphp
+                            <div class="rateYo"></div>
                             <div class="col-sm-8">
                                 <div class="reviews">
-                                    <a href="#" class="lnk">(13 Reviews)</a>
+                                    <a href="#" class="lnk">{{ round($rate,2) }} / 5 ({{ $count }} Reviews)</a>
                                 </div>
                             </div>
                         </div><!-- /.row -->
@@ -216,7 +231,6 @@
                 <ul id="product-tabs" class="nav nav-tabs nav-tab-cell">
                     <li class="active"><a data-toggle="tab" href="#description">DESCRIPTION</a></li>
                     <li><a data-toggle="tab" href="#review">REVIEW</a></li>
-                    <li><a data-toggle="tab" href="#tags">TAGS</a></li>
                 </ul><!-- /.nav-tabs #product-tabs -->
             </div>
             <div class="col-sm-9">
@@ -234,7 +248,25 @@
 
                             <div class="product-reviews">
                                 <h4 class="title">Customer Reviews</h4>
-
+                                <div class="review_rating">
+                                    <span>{{ round($rate,2) }}</span>
+                                    <span>/5</span>
+                                    <div class="clear-fix"></div>
+                                    <div class="rateYo"></div>
+                                </div>
+                                <style>
+                                    .review_rating{
+                                        text-align: left;
+                                        margin-bottom: 25px;
+                                    }
+                                    .review_rating span:first-child{
+                                        font-size: 40px;
+                                        color: #000;
+                                    }
+                                    .review_rating span:nth-child(2){
+                                        font-size: 26px;
+                                    }
+                                </style>
                                 <div class="reviews">
                                     <div class="review">
                                         <div class="review-title"><span class="summary">We love this product</span><span class="date"><i class="fa fa-calendar"></i><span>1 days ago</span></span></div>
@@ -246,114 +278,68 @@
 
 
                             <div class="product-add-review">
-                                <h4 class="title">Write your own review</h4>
-                                <div class="review-table">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell-label">&nbsp;</th>
-                                                    <th>1 star</th>
-                                                    <th>2 stars</th>
-                                                    <th>3 stars</th>
-                                                    <th>4 stars</th>
-                                                    <th>5 stars</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cell-label">Quality</td>
-                                                    <td><input type="radio" name="quality" class="radio" value="1"></td>
-                                                    <td><input type="radio" name="quality" class="radio" value="2"></td>
-                                                    <td><input type="radio" name="quality" class="radio" value="3"></td>
-                                                    <td><input type="radio" name="quality" class="radio" value="4"></td>
-                                                    <td><input type="radio" name="quality" class="radio" value="5"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="cell-label">Price</td>
-                                                    <td><input type="radio" name="quality" class="radio" value="1"></td>
-                                                    <td><input type="radio" name="quality" class="radio" value="2"></td>
-                                                    <td><input type="radio" name="quality" class="radio" value="3"></td>
-                                                    <td><input type="radio" name="quality" class="radio" value="4"></td>
-                                                    <td><input type="radio" name="quality" class="radio" value="5"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="cell-label">Value</td>
-                                                    <td><input type="radio" name="quality" class="radio" value="1"></td>
-                                                    <td><input type="radio" name="quality" class="radio" value="2"></td>
-                                                    <td><input type="radio" name="quality" class="radio" value="3"></td>
-                                                    <td><input type="radio" name="quality" class="radio" value="4"></td>
-                                                    <td><input type="radio" name="quality" class="radio" value="5"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table><!-- /.table .table-bordered -->
-                                    </div><!-- /.table-responsive -->
-                                </div><!-- /.review-table -->
 
+
+                                @if (Auth::user()->id != NULL)
+                                @if (@$reviewuser->user_id != Auth::user()->id && @$reviewuser->product_id !=$product->id)
+                                <div>
+                                    @error('review')
+                                        <div class="alert alert-danger alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                    @enderror
+                                    @error('description' )
+                                        <div class="alert alert-danger alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                    @enderror
+                                </div>
+                                <h4 class="title">Write your own review</h4>
                                 <div class="review-form">
                                     <div class="form-container">
-                                        <form role="form" class="cnt-form">
-
+                                        <form role="form" class="cnt-form" action="{{ route('submit.review') }}" method="POST" id="contactForm">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="rating">
+                                                    <div class="star-bg">
+                                                        @for($i=0;$i<=4;$i++)
+                                                        <i class="fa fa-star torate" data-index="{{ $i }}"></i>
+                                                        @endfor
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label for="exampleInputName">Your Name <span class="astk">*</span></label>
-                                                        <input type="text" class="form-control txt" id="exampleInputName" placeholder="">
+                                                        <input type="hidden" class="form-control txt" id="name" name="name" value="{{ Auth::user()->name }}">
                                                     </div><!-- /.form-group -->
                                                     <div class="form-group">
-                                                        <label for="exampleInputSummary">Summary <span class="astk">*</span></label>
-                                                        <input type="text" class="form-control txt" id="exampleInputSummary" placeholder="">
+                                                        <label for="reviewmsg">Review <span class="astk">*</span></label>
+                                                        <input type="text" id="reviewmsg" name="reviewmsg" class="form-control">
                                                     </div><!-- /.form-group -->
-                                                </div>
+                                                    <input type="hidden" id="p_id" name="p_id" value="{{ $product->id }}">
 
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="exampleInputReview">Review <span class="astk">*</span></label>
-                                                        <textarea class="form-control txt txt-review" id="exampleInputReview" rows="4" placeholder=""></textarea>
-                                                    </div><!-- /.form-group -->
                                                 </div>
                                             </div><!-- /.row -->
-
+                                            <input type="hidden" id="user_id" name="user_id" value="{{ Auth::user()->id }}">
+                                            <input type="hidden" name="rated" id="rated">
                                             <div class="action text-right">
-                                                <button class="btn btn-primary btn-upper">SUBMIT REVIEW</button>
+                                                <button class="btn btn-primary btn-upper" id="submit">SUBMIT REVIEW</button>
                                             </div><!-- /.action -->
 
                                         </form><!-- /.cnt-form -->
                                     </div><!-- /.form-container -->
                                 </div><!-- /.review-form -->
+                                @endif
+                                @endif
+
 
                             </div><!-- /.product-add-review -->
 
                         </div><!-- /.product-tab -->
                     </div><!-- /.tab-pane -->
-
-                    <div id="tags" class="tab-pane">
-                        <div class="product-tag">
-
-                            <h4 class="title">Product Tags</h4>
-                            <form role="form" class="form-inline form-cnt">
-                                <div class="form-container">
-
-                                    <div class="form-group">
-                                        <label for="exampleInputTag">Add Your Tags: </label>
-                                        <input type="email" id="exampleInputTag" class="form-control txt">
-
-
-                                    </div>
-
-                                    <button class="btn btn-upper btn-primary" type="submit">ADD TAGS</button>
-                                </div><!-- /.form-container -->
-                            </form><!-- /.form-cnt -->
-
-                            <form role="form" class="form-inline form-cnt">
-                                <div class="form-group">
-                                    <label>&nbsp;</label>
-                                    <span class="text col-md-offset-3">Try spaces to separate tags. try single quotes  for phrases.</span>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
 
                 </div>
             </div>
@@ -423,4 +409,51 @@
 </div>
 <div class="clearfix"></div>
 </div>
+<script>
+    var ratedIndex = -1;
+    resetStarColors();
+
+    if(localStorage.getItem('ratedIndex') != null){
+        setStars(parseInt(localStorage.getItem('ratedIndex')));
+
+        resetStarColors();
+    }
+
+
+    $('.torate').on('click',function(){
+        ratedIndex=parseInt($(this).data('index'));
+        ratedIndex=ratedIndex+1;
+        localStorage.setItem('ratedIndex',ratedIndex);
+        document.getElementById('rated').value=ratedIndex;
+    });
+    $('.torate').mouseover(function(){
+        resetStarColors();
+        var currentIndex = parseInt($(this).data('index'));
+        setStars(currentIndex);
+    });
+    $('torate').mouseleave(function(){
+        resetStarColors();
+        if(ratedIndex != -1){
+            setStars(ratedIndex);
+        }
+
+    });
+
+    function setStars(max){
+        for(var i=0; i<= max ; i++)
+        $('.torate:eq('+i+')').css('color','#ffc808');
+    }
+    function resetStarColors(){
+        $('.torate').css('color','black');
+    }
+</script>
+<script>
+    $(function () {
+
+        $(".rateYo").rateYo({
+          rating: {{ round($rate,2) }},
+        });
+
+      });
+</script>
 @endsection
