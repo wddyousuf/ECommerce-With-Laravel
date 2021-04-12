@@ -47,7 +47,7 @@ class FrontendController extends Controller
         $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
         $data['product']=Product::orderBy('id','desc')->get();
         $data['products']=Product::orderBy('id','asc')->get();
-        $data['user']=User::where('role','admin')->all();
+        $data['user']=User::where('role','admin')->get();
         return view('frontend.layouts.aboutus',$data);
     }
     public function contact(){
@@ -61,7 +61,7 @@ class FrontendController extends Controller
         $data['brand']=Product::select('brand_id')->groupBy('brand_id')->get();
         $data['product']=Product::orderBy('id','desc')->get();
         $data['products']=Product::orderBy('id','asc')->get();
-        $data['user']=User::where('role','admin')->all();
+        $data['user']=User::where('role','admin')->get();
         return view('frontend.layouts.contactus',$data);
     }
     public function store(Request $request){

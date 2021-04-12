@@ -22,7 +22,7 @@ Route::post('/contacts/store', 'FrontendController@store')->name('client.message
 Route::post('/findproduct', 'FrontendController@findproduct')->name('find.product');
 Route::get('/getproduct', 'FrontendController@getproduct')->name('get.product');
 Route::get('/allProducts', 'FrontendController@allproduct')->name('all.product');
-Route::get('/category/{name}', 'FrontendController@categoryproduct')->name('category.product');
+Route::get('/categories/{name}', 'FrontendController@categoryproduct')->name('category.product');
 Route::get('/trackOrder', 'FrontendController@track')->name('track');
 Route::post('/trackOrder', 'FrontendController@trackorder')->name('track.order');
 Route::post('/submitReview', 'FrontendController@submit')->name('submit.review');

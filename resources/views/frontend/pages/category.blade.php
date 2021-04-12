@@ -6,7 +6,28 @@
 <div class='row single-product'>
     @include('frontend.layouts.sidebar')
     <div class='col-md-9'>
+        <script>
+            var ratings=[];
+            var i=0;
+        </script>
             @foreach ($cproduct as $item)
+            @php
+            $count=0;
+            $rating=0;
+          $review=App\Model\ProductReview::where('product_id',$item->id)->get();
+      @endphp
+      @foreach ($review as $itesm)
+                    @php
+                    $count = $count+1;
+                    $rating=$itesm->review+$rating;
+                    @endphp
+                    @endforeach
+                    @php
+                        if ($count != 0)
+                        $rate=$rating/$count;
+                        else
+                        $rate=0;
+                    @endphp
                 <div class="item">
                     <div class="products col-sm-3">
                         <div class="product">
@@ -20,7 +41,7 @@
 
                           <div class="product-info text-left">
                             <h3 class="name"><a href="{{ route('product.detail',$item->slug) }}">{{ $item->name }}</a></h3>
-                            <div class="rating rateit-small"></div>
+                            <div class="rateYo"></div>
                             <div class="description"></div>
                             <div class="product-price">
                               @if (!empty($item->discount_price))
@@ -53,9 +74,26 @@
                       </div>
                       <!-- /.products -->
                 </div>
+                <script>
+                    ratings[i]={{ round($rate,2) }};
+                    i++;
+                  </script>
             @endforeach
           <!-- /.item -->
     </div>
     <div class="clearfix"></div>
 </div><!-- /.row -->
+<script>
+    $(function () {
+        for (var j = 0; j <= i; j++){
+            $(".rateYo").eq(j).rateYo({
+                rating:ratings[j],
+                starWidth: "15px",
+              });
+        }
+
+
+      });
+
+</script>
 @endsection

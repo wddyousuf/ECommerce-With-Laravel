@@ -49,9 +49,6 @@
 
                     <div class="rating-reviews m-t-20">
                         <div class="row">
-                            {{--  <div class="col-sm-3">
-                                <div class="rating rateit-small"></div>
-                            </div>  --}}
                             @foreach ($review as $item)
                             @php
                             $count = $count+1;
